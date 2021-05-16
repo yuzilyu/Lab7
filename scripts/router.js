@@ -1,11 +1,90 @@
 // router.js
 
 export const router = {};
+const settingUrl = '#settings';
+const entryUrl = '#entry';
+var entryPageElement = document.querySelector('entry-page');
+const blankEntry = entryPageElement.entry;
+const setting = document.querySelector("img");
+const header = document.querySelector("h1");
+const indexState = {'name': 'index', 'pageNum': 0, 'url': ''};
+const settingState = {'name': 'setting', 'pageNum': -1, 'url': settingUrl};
+const entryState = {'name': 'Entry', 'entryNum': 0, 'url': entryUrl, 'entry': blankEntry}; //include the entry number in this state
 
 /**
  * Changes the "page" (state) that your SPA app is currently set to
  */
-router.setState = function() {
+router.setState = function(state, newPost, replace) {
+  if(replace){
+    if(state.name == 'setting'){
+      header.innerHTML = 'Settings';
+      document.body.classList.add('settings');
+      document.body.classList.remove('single-entry');
+      history.replaceState(settingState, 'settings', settingUrl);
+    }else if(state.name == 'index'){
+      document.body.classList.remove('settings');
+      document.body.classList.remove('single-entry');
+      history.replaceState(indexState, 'index', location.origin);
+      let entryImg = entryPageElement.shadowRoot.querySelector('img');
+      let entryAudio = entryPageElement.shadowRoot.querySelector('audio');
+      if(entryImg){
+        entryImg.parentElement.removeChild(entryImg);
+      }
+      if(entryAudio){
+        entryAudio.parentElement.removeChild(entryAudio);
+      }
+    }else{
+      header.innerHTML = 'Entry ' + state.entryNum;
+      if(!document.querySelector('entry-page').shadowRoot.querySelector('img')){
+        document.querySelector('entry-page').entry = newPost;
+      }
+      // let entryAudio = entryPageElement.shadowRoot.querySelector('audio');
+      // if(entryImg){
+      //   entryImg.parentElement.appendChild(entryImg);
+      // }
+      // if(entryAudio){
+      //   entryAudio.parentElement.removeChild(entryAudio);
+      // }
+      document.body.classList.remove('settings');
+      document.body.classList.add('single-entry');
+      history.replaceState(entryState, 'entry', entryUrl + state.entryNum);
+    }
+  }else{
+    if(state.name == 'setting'){
+      header.innerHTML = 'Settings';
+      document.body.classList.add('settings');
+      document.body.classList.remove('single-entry');
+      history.pushState(settingState, 'settings', settingUrl);
+      //location = location.origin + settingUrl;
+    }else if(state.name == 'index'){
+      document.body.classList.remove('settings');
+      document.body.classList.remove('single-entry');
+      history.pushState(indexState, 'index', location.origin);
+      let entryImg = entryPageElement.shadowRoot.querySelector('img');
+      let entryAudio = entryPageElement.shadowRoot.querySelector('audio');
+      if(entryImg){
+        entryImg.parentElement.removeChild(entryImg);
+      }
+      if(entryAudio){
+        entryAudio.parentElement.removeChild(entryAudio);
+      }
+    }else{
+      entryPageElement.entry = newPost.entry;
+      let i = 0;
+      for(i; i < document.querySelector('main').childElementCount; i ++){
+        if(document.querySelector('main').children[i] == newPost){
+          i ++;
+          break;
+        }
+      }
+      header.innerHTML = 'Entry ' + i;
+      document.body.classList.add('single-entry');
+      entryState.entryNum = i;
+      entryState.entry = newPost.entry;
+      history.pushState(entryState, 'entry', entryUrl + i);
+    }
+  }
+ 
   /**
    * - There are three states that your SPA app will have
    *    1. The home page
@@ -35,4 +114,5 @@ router.setState = function() {
    *    1. You may add as many helper functions in this file as you like
    *    2. You may modify the parameters of setState() as much as you like
    */
+
 }
