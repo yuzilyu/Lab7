@@ -25,7 +25,7 @@ router.setState = function(state, newPost, replace) {
     }else if(state.name == 'index'){
       document.body.classList.remove('settings');
       document.body.classList.remove('single-entry');
-      history.replaceState(indexState, 'index', origin);
+      history.replaceState(indexState, 'index', 'https://yuzilyu.github.io/Lab7/');
       let entryImg = entryPageElement.shadowRoot.querySelector('img');
       let entryAudio = entryPageElement.shadowRoot.querySelector('audio');
       if(entryImg){
@@ -60,7 +60,7 @@ router.setState = function(state, newPost, replace) {
     }else if(state.name == 'index'){
       document.body.classList.remove('settings');
       document.body.classList.remove('single-entry');
-      history.pushState(indexState, 'index', origin);
+      history.pushState(indexState, 'index', 'https://yuzilyu.github.io/Lab7/');
       let entryImg = entryPageElement.shadowRoot.querySelector('img');
       let entryAudio = entryPageElement.shadowRoot.querySelector('audio');
       if(entryImg){
