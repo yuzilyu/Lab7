@@ -27,6 +27,7 @@ router.setState = function(state, newPost, replace) {
       document.body.classList.remove('settings');
       document.body.classList.remove('single-entry');
       history.replaceState(indexState, 'index', location.origin + origin);
+
       let entryImg = entryPageElement.shadowRoot.querySelector('img');
       let entryAudio = entryPageElement.shadowRoot.querySelector('audio');
       if(entryImg){
@@ -62,6 +63,7 @@ router.setState = function(state, newPost, replace) {
       document.body.classList.remove('settings');
       document.body.classList.remove('single-entry');
       history.pushState(indexState, 'index', location.origin + origin);
+
       let entryImg = entryPageElement.shadowRoot.querySelector('img');
       let entryAudio = entryPageElement.shadowRoot.querySelector('audio');
       if(entryImg){
