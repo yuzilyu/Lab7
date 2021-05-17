@@ -54,4 +54,5 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('main').appendChild(newPost);
       });
     });
+    
 });

@@ -10,7 +10,8 @@ const header = document.querySelector("h1");
 const indexState = {'name': 'index', 'pageNum': 0, 'url': ''};
 const settingState = {'name': 'setting', 'pageNum': -1, 'url': settingUrl};
 const entryState = {'name': 'Entry', 'entryNum': 0, 'url': entryUrl, 'entry': blankEntry}; //include the entry number in this state
-
+const origin = location.pathname;
+console.log(origin);
 /**
  * Changes the "page" (state) that your SPA app is currently set to
  */
@@ -24,7 +25,7 @@ router.setState = function(state, newPost, replace) {
     }else if(state.name == 'index'){
       document.body.classList.remove('settings');
       document.body.classList.remove('single-entry');
-      history.replaceState(indexState, 'index', location.origin);
+      history.replaceState(indexState, 'index', origin);
       let entryImg = entryPageElement.shadowRoot.querySelector('img');
       let entryAudio = entryPageElement.shadowRoot.querySelector('audio');
       if(entryImg){
@@ -59,7 +60,7 @@ router.setState = function(state, newPost, replace) {
     }else if(state.name == 'index'){
       document.body.classList.remove('settings');
       document.body.classList.remove('single-entry');
-      history.pushState(indexState, 'index', location.origin);
+      history.pushState(indexState, 'index', origin);
       let entryImg = entryPageElement.shadowRoot.querySelector('img');
       let entryAudio = entryPageElement.shadowRoot.querySelector('audio');
       if(entryImg){
